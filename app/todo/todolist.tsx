@@ -13,7 +13,9 @@ const Todolist = () => {
   const [todoState, setTodoState] = useState<boolean>(false);
   const [toModifyText, setToModifyText] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const [editMode, setEditMode] = useState<Record<number, boolean>>(false);
+  const [editMode, setEditMode] = useState<{ [key: number]: boolean }>({
+    0: false,
+  });
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +47,6 @@ const Todolist = () => {
         .then((response) => response.json())
         .then((data) => {
           setTodolistValue(data);
-          console.log(todolistValue);
         })
         .catch((error) => {
           console.error(error);
@@ -150,7 +151,6 @@ const Todolist = () => {
         />
         <button
           className="p-1 m-1 rounded hover:bg-white hover:font-bold bg-yellow-50 disabled:text-gray-500 disabled:hover:font-normal disabled:hover:bg-white"
-          data-testid="new-todo-add-button"
           onClick={async () => {
             await createtodoList();
             handleCreateTodoClick();
@@ -187,7 +187,6 @@ const Todolist = () => {
               </label>
               <button
                 className="p-1 m-1 text-sm rounded hover:bg-white hover:font-bold bg-yellow-50"
-                data-testid="modify-button"
                 onClick={() => {
                   setEditMode((prevEditMode) => ({
                     ...prevEditMode,
@@ -201,7 +200,6 @@ const Todolist = () => {
               </button>
               <button
                 className="p-1 m-1 text-sm rounded hover:bg-white hover:font-bold bg-yellow-50"
-                data-testid="delete-button"
                 onClick={() => {
                   deletetodoList(item?.id);
                   handleCreateTodoClick();
@@ -225,23 +223,28 @@ const Todolist = () => {
                     value={toModifyText}
                     onChange={handleInput}
                     autoFocus={true}
-                    data-testid="modify-input"
                   />
                 </label>
                 <button
                   className="p-1 m-1 text-sm rounded hover:bg-white hover:font-bold bg-yellow-50"
                   onClick={() => {
                     modifytodoList(item.id);
-                    setEditMode(false);
+                    setEditMode((prevEditMode) => ({
+                      ...prevEditMode,
+                      [item.id]: false,
+                    }));
                   }}
-                  data-testid="submit-button"
                 >
                   제출
                 </button>
                 <button
                   className="p-1 m-1 text-sm rounded hover:bg-white hover:font-bold bg-yellow-50"
-                  onClick={() => setEditMode(false)}
-                  data-testid="cancel-button"
+                  onClick={() =>
+                    setEditMode((prevEditMode) => ({
+                      ...prevEditMode,
+                      [item.id]: false,
+                    }))
+                  }
                 >
                   취소
                 </button>
