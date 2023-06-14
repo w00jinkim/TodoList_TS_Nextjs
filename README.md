@@ -12,7 +12,7 @@
 
 ## 배포
 
-- <a href="https://6439018c88cbe71b26c0f586--cute-crisp-d78737.netlify.app/">넷틀리파이링크<a/>
+- ~~<a href="https://6439018c88cbe71b26c0f586--cute-crisp-d78737.netlify.app/">넷틀리파이링크<a/>~~ 현재 api 제공 종료로 api 사용 불가능
 - 테스트 아이디 : test@test.org
 - 테스트 비밀번호 : 1234test
 
